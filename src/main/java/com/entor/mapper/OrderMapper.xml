@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Order">
+   <insert id="add" parameterType="Order">
+      insert into order_(address,post,receiver,mobile,userMessage,createDate,payDate,uid) 
+      values(#{address},#{post},#{receiver},#{mobile},#{userMessage},#{createDate},#{payDate},#{uid})
+   </insert>
+   <delete id="deleteById">
+      delete from order_ where id = #{id}
+   </delete>
+   <update id="update" parameterType="Order">
+      update order_
+      <trim prefix="set" suffixOverrides=",">
+           <if test="address!=null and address!=''">
+               address = #{address}
+           </if>
+           <if test="post!=null and post!=''">
+               post = #{post}
+           </if>
+           <if test="receiver!=null and receiver!=''">
+               receiver = #{receiver}
+           </if>
+           <if test="mobile!=null and mobile!=''">
+               mobile = #{mobile}
+           </if>
+           <if test="userMessage!=null and userMessage!=''">
+               userMessage = #{userMessage}
+           </if>
+           <if test="createDate!=null and createDate!=''">
+               createDate = #{createDate}
+           </if>
+           <if test="payDate!=null and payDate!=''">
+               payDate = #{payDate}
+           </if>
+           <if test="uid!=null and uid!=''">
+               uid = #{uid}
+           </if>
+        </trim>
+        where id = #{id}
+   </update>
+   <select id="queryById" resultType="Order">
+      select * from order_ where id = #{id}
+   </select>
+   <select id="getTotals" resultType="int">
+      select count(*) from order_
+   </select>
+   <select id="queryByPage" parameterType="map" resultType="Order">
+      select * from order_ order by id limit #{start},#{pageSize}
+   </select>
+</mapper>

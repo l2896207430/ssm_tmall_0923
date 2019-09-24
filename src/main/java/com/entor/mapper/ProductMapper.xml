@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Product">
+   <insert id="add" parameterType="Product">
+      insert into product(name,subTitle,orignalPrice,promotePrice,stock,cid,createDate) 
+      values(#{name},#{subTitle},#{orignalPrice},#{promotePrice},#{stock},#{cid},#{createDate})
+   </insert>
+   <delete id="deleteById">
+      delete from product where id = #{id}
+   </delete>
+   <update id="update" parameterType="Product">
+      update product
+      <trim prefix="set" suffixOverrides=",">
+           <if test="name!=null and name!=''">
+               name = #{name}
+           </if>
+           <if test="subTitle!=null and subTitle!=''">
+               subTitle = #{subTitle}
+           </if>
+           <if test="orignalPrice!=null and orignalPrice!=''">
+               orignalPrice = #{orignalPrice}
+           </if>
+           <if test="promotePrice!=null and promotePrice!=''">
+               promotePrice = #{promotePrice}
+           </if>
+           <if test="stock!=null and stock!=''">
+               stock = #{stock}
+           </if>
+           <if test="cid!=null and cid!=''">
+               cid = #{cid}
+           </if>
+           <if test="createDate!=null and createDate!=''">
+               createDate = #{createDate}
+           </if>
+        </trim>
+        where id = #{id}
+   </update>
+   <select id="queryById" resultType="Product">
+      select * from product where id = #{id}
+   </select>
+   <select id="getTotals" resultType="int">
+      select count(*) from product
+   </select>
+   <select id="queryByPage" parameterType="map" resultType="Product">
+      select * from product order by id limit #{start},#{pageSize}
+   </select>
+</mapper>
